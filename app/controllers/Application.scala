@@ -7,8 +7,6 @@ import play.api.libs.json.{Json, _}
 import play.api.libs.ws.{WS, WSResponse}
 import play.api.libs.concurrent.Execution.Implicits._
 
-import database.DBConnector
-
 import scala.concurrent.Future
 
 object Application extends Controller {
