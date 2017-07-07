@@ -36,7 +36,15 @@ object DBConnector {
 
   def subTag = ???
 
-  def getData = ???
+  def getData = {
+    val db = Database.forConfig("h2mem1")
+    try {
+      val q2 = for {
+        a <- articles
+      } yield (a.url, a.title, a.imageURL)
+      q2.toString
+    } finally db.close
+  }
 
   def setData = ???
 
@@ -58,7 +66,7 @@ object DBConnector {
       "OK"
     } catch {
       case _ => "ERR"
-    }    finally db.close
+    } finally db.close
   }
 }
 

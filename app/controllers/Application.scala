@@ -49,5 +49,7 @@ object Application extends Controller {
     }
   }
 
+  def getData = DBConnector.getData
+
 }
 
