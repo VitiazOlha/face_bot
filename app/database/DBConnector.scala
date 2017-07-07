@@ -3,6 +3,8 @@ package database
 import play.api.Logger
 import play.api.db.DB
 import slick.jdbc.H2Profile.api._
+import play.api.Play.current
+
 
 object DBConnector {
 //
