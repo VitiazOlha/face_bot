@@ -1,5 +1,6 @@
 package database
 
+import play.api.Logger
 import slick.jdbc.H2Profile.api._
 
 object DBConnector {
@@ -42,12 +43,13 @@ object DBConnector {
     val db = Database.forConfig("h2mem1")
     try {
       val articleLinks: List[(String, String, String, Iterable[String])] = Parser.getArticleURL.map(url => Parser.getDataByLink(url))
-
+      Logger.debug("  1 ")
       val setup = DBIO.seq(
         (articles.schema ++ tags.schema).create,
         articles ++= articleLinks.map(e => (e._1, e._2, e._3)),
         tags ++= articleLinks.flatMap(e => for (t <- e._4) yield (e._1, t))
       )
+      Logger.debug(" 2 ")
 
       val setupFuture = db.run(setup)
       "OK"
