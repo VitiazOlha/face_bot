@@ -1,9 +1,10 @@
 import play.api.{Logger, _}
+import database.DBConnector
 
 object Global extends GlobalSettings {
 
   override def onStart(app: Application) {
-    Logger.info("Application is started!!!")
+    DBConnector.update
   }
 
 }
