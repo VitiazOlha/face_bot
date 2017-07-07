@@ -1,6 +1,6 @@
 package database
 
-import net.ruippeixotog.scalascraper.browser.{_, JsoupBrowser}
+import net.ruippeixotog.scalascraper.browser.JsoupBrowser
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 
