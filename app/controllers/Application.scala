@@ -1,8 +1,13 @@
 package controllers
 
-import play.api.libs.json.{JsNumber, JsValue, Json}
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.Play.current
+import play.api.db._
 import play.api.mvc._
+import play.api.libs.json.{Json, _}
+import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.concurrent.Execution.Implicits._
+
+import database.DBConnector
 
 import scala.concurrent.Future
 
