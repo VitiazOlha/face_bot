@@ -4,6 +4,8 @@ import net.ruippeixotog.scalascraper.browser.JsoupBrowser
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 
+import scala.concurrent.Future
+
 object Parser {
   val browser = JsoupBrowser()
   val pageURL = "https://tproger.ru/category/news/"
@@ -20,12 +22,16 @@ object Parser {
     getArticleLink(pageURL)
   }
 
-  def getDataByLink(pageURL: String): (String, String, String, Iterable[String]) = {
-    val doc = browser.get(pageURL)
-    val title = doc >> text("h1[class=entry-title]")
-    val imageURL = doc >> attr("href")("a[rel=bookmark]")
-    val tags = (doc >> element("footer[class=entry-meta clearfix]") >> element("ul") >> texts("a")).filterNot(_ == "")
-    (pageURL, title, imageURL, tags)
+  def getDataByLink(pageURL: String) = {
+    try {
+      val doc = browser.get(pageURL)
+      val title = doc >> text("h1[class=entry-title]")
+      val imageURL = doc >> attr("href")("a[rel=bookmark]")
+      val tags = (doc >> element("footer[class=entry-meta clearfix]") >> element("ul") >> texts("a")).filterNot(_ == "")
+      (pageURL, title, imageURL, tags)
+    } catch {
+      case _ => Nil
+    }
   }
 
   def get_all: List[String] = {
