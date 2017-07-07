@@ -8,6 +8,7 @@ import play.api.libs.ws.{WS, WSResponse}
 import play.api.libs.concurrent.Execution.Implicits._
 
 import scala.concurrent.Future
+import database.{DBConnector, Parser}
 
 object Application extends Controller {
 
@@ -48,27 +49,9 @@ object Application extends Controller {
     }
   }
 
-  /*
-  def db = Action {
-    var out = ""
-    val conn = DB.getConnection()
-    try {
-      val stmt = conn.createStatement
-
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)")
-      stmt.executeUpdate("INSERT INTO ticks VALUES (now())")
-
-      val rs = stmt.executeQuery("SELECT tick FROM ticks")
-
-      while (rs.next) {
-        out += "Read from DB: " + rs.getTimestamp("tick") + "\n"
-      }
-    } finally {
-      conn.close()
-    }
-    Ok(out)
+  def parseTP = Action {
+    DBConnector.update
+    Ok
   }
-  */
-
 }
 
