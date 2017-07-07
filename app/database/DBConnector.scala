@@ -43,13 +43,9 @@ object DBConnector {
   def update = {
     val db = Database.forConfig("h2mem1")
     try {
-      Logger.debug(" 0 ")
       val d1 = DateTime.now
       val articleL = Parser.getArticleURL
-      val d2 = Hours.hoursBetween(d1, DateTime.now)
-      Logger.debug(s"$d2")
       val articleLinks = articleL.map(url => Parser.getDataByLink(url))
-      Logger.debug(" 1 ")
       val setup = DBIO.seq(
         (articles.schema ++ tags.schema).create,
         articles ++= articleLinks.map(e => (e._1, e._2, e._3)),
