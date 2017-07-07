@@ -44,18 +44,16 @@ object DBConnector {
       val articleLinks: List[(String, String, String, Iterable[String])] = Parser.getArticleURL.map(url => Parser.getDataByLink(url))
 
       val setup = DBIO.seq(
-        // Create the tables, including primary and foreign keys
         (articles.schema ++ tags.schema).create,
-
-        // Insert some suppliers
         articles ++= articleLinks.map(e => (e._1, e._2, e._3)),
         tags ++= articleLinks.flatMap(e => for (t <- e._4) yield (e._1, t))
       )
 
       val setupFuture = db.run(setup)
-
-    } finally db.close
-    "OK"
+      "OK"
+    } catch {
+      case _ => "ERR"
+    }    finally db.close
   }
 }
 
