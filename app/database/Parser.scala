@@ -4,8 +4,6 @@ import net.ruippeixotog.scalascraper.browser.JsoupBrowser
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 
-import scala.concurrent.Future
-
 object Parser {
   val browser = JsoupBrowser()
   val pageURL = "https://tproger.ru/category/news/"
@@ -30,7 +28,7 @@ object Parser {
       val tags = (doc >> element("footer[class=entry-meta clearfix]") >> element("ul") >> texts("a")).filterNot(_ == "")
       (pageURL, title, imageURL, tags)
     } catch {
-      case _ => Nil
+      case _ => ("","","",Nil)
     }
   }
 

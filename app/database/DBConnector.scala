@@ -43,7 +43,7 @@ object DBConnector {
     val db = Database.forConfig("h2mem1")
     try {
       Logger.debug(" 0 ")
-      val articleLinks: List[(String, String, String, Iterable[String])] = Parser.getArticleURL.map(url => Parser.getDataByLink(url))
+      val articleLinks = Parser.getArticleURL.map(url => Parser.getDataByLink(url))
       Logger.debug(" 1 ")
       val setup = DBIO.seq(
         (articles.schema ++ tags.schema).create,
