@@ -31,8 +31,4 @@ object Parser {
       case _ => ("","","",Nil)
     }
   }
-
-  def get_all: List[String] = {
-    getArticleURL
-  }
 }

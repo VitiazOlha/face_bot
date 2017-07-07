@@ -52,6 +52,5 @@ object Application extends Controller {
   def getData = Action{
     Ok(DBConnector.getData)
   }
-
 }
 

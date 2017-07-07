@@ -1,6 +1,5 @@
 package database
 
-import org.joda.time.{DateTime, Hours}
 import play.api.Logger
 import slick.jdbc.H2Profile.api._
 
@@ -49,20 +48,18 @@ object DBConnector {
     val db = Database.forConfig("h2mem1")
     try {
       Logger.debug(" 1 ")
-      val articleL = Parser.getArticleURL
-      val articleLinks = articleL.map(url => Parser.getDataByLink(url))
+      val articleLinks = Parser.getArticleURL.map(url => Parser.getDataByLink(url))
       Logger.debug(" 2 ")
+
       val setup = DBIO.seq(
         (articles.schema ++ tags.schema).create,
         articles ++= articleLinks.map(e => (e._1, e._2, e._3)),
         tags ++= articleLinks.flatMap(e => for (t <- e._4) yield (e._1, t))
       )
-      Logger.debug(" 3 ")
 
+      Logger.debug(" 3 ")
       val setupFuture = db.run(setup)
-      "OK"
-    } catch {
-      case _ => "ERR"
+      Logger.debug(" 4 ")
     } finally db.close
   }
 }
