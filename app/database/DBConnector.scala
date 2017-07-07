@@ -55,6 +55,7 @@ object DBConnector {
       val setupFuture = db.run(setup)
 
     } finally db.close
+    "OK"
   }
 }
 

@@ -50,8 +50,7 @@ object Application extends Controller {
   }
 
   def parseTP = Action {
-    DBConnector.update
-    Ok
+    Ok(DBConnector.update)
   }
 }
 
