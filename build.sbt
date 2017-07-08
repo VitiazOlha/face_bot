@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % "3.2.0",
   "org.slf4j" % "slf4j-nop" % "1.6.4",
   "com.typesafe.slick" %% "slick-hikaricp" % "3.2.0",
+  "com.typesafe.play" %% "anorm" % "2.5.1",
   specs2 % Test)
 
 unmanagedResourceDirectories in Test <+= baseDirectory(_ / "target/web/public/test")

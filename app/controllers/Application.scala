@@ -1,14 +1,13 @@
 package controllers
 
 import play.api.Play.current
-import play.api.db._
 import play.api.mvc._
 import play.api.libs.json.{Json, _}
 import play.api.libs.ws.{WS, WSResponse}
 import play.api.libs.concurrent.Execution.Implicits._
 
 import scala.concurrent.Future
-import database.{DBConnector, Parser}
+import parser.Parser
 
 object Application extends Controller {
 
@@ -47,10 +46,6 @@ object Application extends Controller {
     res.map { jsResponse =>
       Ok(jsResponse.body)
     }
-  }
-
-  def getData = Action{
-    Ok(DBConnector.getData.toString)
   }
 }
 
