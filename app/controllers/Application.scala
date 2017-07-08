@@ -14,7 +14,7 @@ object Application extends Controller {
   val PAT = "EAAESnta9mIwBANXgf6NVOSDsfujMwjM60kf778WGXwAKTbB0CdaZBQL2m10sHPODJq6IOiineaYBjxdGhqnyr6h3DkMOIZBEqQo3xOOouUnqy0YZCfiy3b6H6I1MXoptxvxnkmGRInneOZC7A4kGZB4vZAaF1ZCSkDv4mZAMuex1tQZDZD"
 
   def index = Action {
-    Ok("Hi")
+    Ok(models.Subscription.all().toString())
   }
 
   def getQuery = Action { request =>
