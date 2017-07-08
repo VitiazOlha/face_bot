@@ -13,7 +13,11 @@ object Application extends Controller {
 
   val PAT = "EAAESnta9mIwBANXgf6NVOSDsfujMwjM60kf778WGXwAKTbB0CdaZBQL2m10sHPODJq6IOiineaYBjxdGhqnyr6h3DkMOIZBEqQo3xOOouUnqy0YZCfiy3b6H6I1MXoptxvxnkmGRInneOZC7A4kGZB4vZAaF1ZCSkDv4mZAMuex1tQZDZD"
 
-  def index = Action { request =>
+  def index = Action {
+    Ok("Hi")
+  }
+
+  def getQuery = Action { request =>
     if (request.getQueryString("hub.verify_token").get == "vohello")
       Ok(request.getQueryString("hub.challenge").get)
     else
