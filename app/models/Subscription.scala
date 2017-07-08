@@ -42,4 +42,14 @@ object Subscription {
   def get_sub(user_id: Long): List[Subscription] = DB.withConnection { implicit c =>
     SQL("select * from subscription where user_id = {user_id}").on('user_id->user_id).as(sub *)
   }
+
+  def init = {
+    val conn = DB.getConnection()
+    try {
+      val stmt = conn.createStatement
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS subscription (id tag user_id)")
+    } finally {
+      conn.close()
+    }
+  }
 }
