@@ -7,6 +7,7 @@ import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 object Parser {
   val browser = JsoupBrowser()
   val pageURL = "https://tproger.ru/category/news/"
+  val pageURLtag = "https://tproger.ru/tag/"
 
   def getArticleLink(pageURL: String): List[String] = {
     val doc = browser.get(pageURL)
@@ -18,6 +19,10 @@ object Parser {
 
   def getArticleURL: List[String] = {
     getArticleLink(pageURL)
+  }
+
+  def getArticleURLbyTag(tag: String): List[String] = {
+    getArticleLink(pageURLtag + tag + "/")
   }
 
   def getDataByLink(pageURL: String) = {

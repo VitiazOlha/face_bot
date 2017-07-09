@@ -27,8 +27,13 @@ object Application extends Controller {
   def getMessage(text: String): JsValue = text match {
     case "hello" => Json.toJson(Map("text" -> "Hello!"))
     case "help" => Json.toJson(Map("text" -> "Hello, i`m TProger bot.\n@\"tag\" - subscribe on news\n#\"tag\" - get all news about some teg"))
-    case a if a.charAt(0) == '@' => Json.toJson(Map("text" -> ("sub " + a.tail)))
-    case a if a.charAt(0) == '#' => Json.toJson(Map("text" -> ("get " + a.tail)))
+    case a if a.charAt(0) == '@' => {
+      Json.toJson(Map("text" -> ("sub " + a.tail)))
+    }
+    case a if a.charAt(0) == '#' => {
+      val urls = Parser.getArticleURLbyTag(a.tail)
+      Json.toJson(Map("text" -> ("sub " + urls.mkString("\n"))))
+    }
     case _ => Json.toJson(Map("text" -> "Unknown command"))
   }
 
