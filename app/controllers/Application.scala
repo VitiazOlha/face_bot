@@ -32,7 +32,7 @@ object Application extends Controller {
     }
     case a if a.charAt(0) == '#' => {
       val urls = Parser.getArticleURLbyTag(a.tail)
-      Json.toJson(Map("text" -> ("sub " + urls.mkString("\n"))))
+      Json.toJson(Map("text" -> ("sub " + urls.mkString("\n")).substring(0, 200)))
     }
     case _ => Json.toJson(Map("text" -> "Unknown command"))
   }
