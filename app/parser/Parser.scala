@@ -9,7 +9,7 @@ object Parser {
   val pageURL = "https://tproger.ru/category/news/"
   val pageURLtag = "https://tproger.ru/tag/"
 
-  def getArticleLink(pageURL: String): List[String] = {
+  def getArticleLink(pageURL: String): List[String] = { //todo rewrite - get only today's news
     val doc = browser.get(pageURL)
     doc >?> attr("href")("link[rel=next]") match {
       case None => doc >> elementList(".entry-title") >> attr("href")("a")

@@ -24,17 +24,25 @@ object Application extends Controller {
       Ok("Error")
   }
 
-  def getMessage(text: String): JsValue = text match {
-    case "hello" => Json.toJson(Map("text" -> "Hello!"))
-    case "help" => Json.toJson(Map("text" -> "Hello, i`m TProger bot.\n@\"tag\" - subscribe on news\n#\"tag\" - get all news about some teg"))
-    case a if a.charAt(0) == '@' => {
-      Json.toJson(Map("text" -> ("sub " + a.tail)))
-    }
+  def getMessage(sender: BigDecimal, text: String): Future[WSResponse] = text match {
+    case "hello" =>
+      sendMessege(sender, Json.toJson(Map("text" -> "Hello!")))
+    case "help" =>
+      sendMessege(sender, Json.toJson(Map("text" -> "Hello, i`m TProger bot.\n@\"tag\" - subscribe on news\n#\"tag\" - get all news about some teg")))
+    case a if a.charAt(0) == '@' =>
+      sendMessege(sender, Json.toJson(Map("text" -> ("sub " + a.tail))))
     case a if a.charAt(0) == '#' => {
       val urls = Parser.getArticleURLbyTag(a.tail)
-      Json.toJson(Map("text" -> ("sub " + urls.mkString("\n")).substring(0, 200)))
+     for (i <- urls.sliding(5, 5)) {
+       val res = sendMessege(sender, Json.toJson(Map("text" -> i.mkString("\n"))))
+       res.map { jsResponse =>
+         Ok(jsResponse.body)
+       }
+      }
+      sendMessege(sender, Json.toJson(Map("text" -> ("All news by tag " + a.tail))))
     }
-    case _ => Json.toJson(Map("text" -> "Unknown command"))
+    case _ =>
+      sendMessege(sender, Json.toJson(Map("text" -> "Unknown command")))
   }
 
   def sendMessege(sender: BigDecimal, message: JsValue): Future[WSResponse] = {
@@ -48,9 +56,8 @@ object Application extends Controller {
     val json = Json.toJson(request.body)
     val text = (((json \ "entry") (0) \ "messaging") (0) \ "message" \ "text").as[String]
     val sender = (((json \ "entry") (0) \ "messaging") (0) \ "sender" \ "id").as[BigDecimal]
-    val message = getMessage(text)
 
-    val res = sendMessege(sender, message)
+    val res = getMessage(sender, text)
 
     res.map { jsResponse =>
       Ok(jsResponse.body)
