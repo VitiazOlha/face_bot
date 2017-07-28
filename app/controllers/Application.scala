@@ -39,7 +39,7 @@ object Application extends Controller {
          Ok(jsResponse.body)
        }
       }
-      sendMessege(sender, Json.toJson(Map("text" -> ("All news by tag " + a.tail))))
+      sendMessege(sender, Json.toJson(Map("text" -> "")))
     }
     case _ =>
       sendMessege(sender, Json.toJson(Map("text" -> "Unknown command")))
