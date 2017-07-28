@@ -8,7 +8,6 @@ object Parser {
   val browser = JsoupBrowser()
   val pageURL = "https://tproger.ru/category/news/"
   val pageURLtag = "https://tproger.ru/tag/"
-  val pageURLsearch = "https://tproger.ru/search/?q="
 
   def getArticleLink(pageURL: String): List[String] = {
     val doc = browser.get(pageURL)
@@ -23,8 +22,7 @@ object Parser {
   }
 
   def getArticleURLbyTag(tag: String): List[String] = {
-//    getArticleLink(pageURLtag + tag + "/")
-    getArticleLink(pageURLsearch + tag)
+    getArticleLink(pageURLtag + tag + "/")
   }
 
   def getDataByLink(pageURL: String) = {

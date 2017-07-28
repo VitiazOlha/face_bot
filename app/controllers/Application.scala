@@ -33,13 +33,16 @@ object Application extends Controller {
       sendMessege(sender, Json.toJson(Map("text" -> ("sub " + a.tail))))
     case a if a.charAt(0) == '#' => {
       val urls = Parser.getArticleURLbyTag(a.tail)
-     for (i <- urls.sliding(5, 5)) {
-       val res = sendMessege(sender, Json.toJson(Map("text" -> i.mkString("\n"))))
-       res.map { jsResponse =>
-         Ok(jsResponse.body)
-       }
-      }
-      sendMessege(sender, Json.toJson(Map("text" -> "")))
+      if (urls.nonEmpty) {
+        for (i <- urls.sliding(5, 5)) {
+          val res = sendMessege(sender, Json.toJson(Map("text" -> i.mkString("\n"))))
+          res.map { jsResponse =>
+            Ok(jsResponse.body)
+          }
+        }
+        sendMessege(sender, Json.toJson(Map("text" -> "")))
+      } else
+        sendMessege(sender, Json.toJson(Map("text" -> "Inexisting tag")))
     }
     case _ =>
       sendMessege(sender, Json.toJson(Map("text" -> "Unknown command")))
