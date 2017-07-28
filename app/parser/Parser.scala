@@ -24,7 +24,7 @@ object Parser {
 
   def getArticleURLbyTag(tag: String): List[String] = {
 //    getArticleLink(pageURLtag + tag + "/")
-    getArticleLink(pageURLsearch + tag + "/")
+    getArticleLink(pageURLsearch + tag)
   }
 
   def getDataByLink(pageURL: String) = {
